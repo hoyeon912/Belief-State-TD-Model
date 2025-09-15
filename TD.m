@@ -32,6 +32,7 @@ function results = TD(x,O,T)
         b = b'*(T.*squeeze(O(:,:,x(t))));
         b=b';
         b = b./sum(b);
+        current_state = find(b==1);
 
         % TD update
         w0 = w;

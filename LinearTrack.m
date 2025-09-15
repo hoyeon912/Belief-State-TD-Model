@@ -19,9 +19,10 @@
    
 % Create distribution of ISI's
 % Possible ISIs range from 5-13
-for i=1:nTrials
-    ISIdistributionMatrix(i)=sum(ISIcdf<rand)+5;
-end
+% for i=1:nTrials
+%     ISIdistributionMatrix(i)=sum(ISIcdf<rand)+5;
+% end
+ISIdistributionMatrix = 13 * ones([1, nTrials]);
 
 % Calculate hazard rate of receiving reward after substates 5-14 (ISIhazard);
 % Used later to create transition matrix
@@ -80,15 +81,15 @@ O=zeros(15,15,3);
 
 %obtaining reward
     O(14,15,:) = [0 0 1];
-    O(13,15,:) = [0 0 1];
-    O(12,15,:) = [0 0 1];
-    O(11,15,:) = [0 0 1];
-    O(10,15,:) = [0 0 1];
-    O(9,15,:) = [0 0 1];
-    O(8,15,:) = [0 0 1];
-    O(7,15,:) = [0 0 1];
-    O(6,15,:) = [0 0 1];
-    
+    % O(13,15,:) = [0 0 1];
+    % O(12,15,:) = [0 0 1];
+    % O(11,15,:) = [0 0 1];
+    % O(10,15,:) = [0 0 1];
+    % O(9,15,:) = [0 0 1];
+    % O(8,15,:) = [0 0 1];
+    % O(7,15,:) = [0 0 1];
+    % O(6,15,:) = [0 0 1];
+    % 
 %stimulus onset
     O(15,1,:) = [0 1 0];
     
@@ -102,27 +103,21 @@ T=zeros(15,15);
 
 %odor ON from substates 1-6
 %no probability of transitioning out of ISI while odor ON
-T(1,2)=1;
-T(2,3)=1;
-T(3,4)=1;
-T(4,5)=1;
-T(5,6)=1;
-%add obvious linear track
-% T(6,7)=1;
-% T(7,8)=1;
-% T(8,9)=1;
-% T(9,10)=1;
-% T(10,11)=1;
-% T(11,12)=1;
-% T(12,13)=1;
-% T(13,14)=1;
+% T(1,2)=1;
+% T(2,3)=1;
+% T(3,4)=1;
+% T(4,5)=1;
+% T(5,6)=1;
 
 %T(ISIsubstate_i+6-->ISIsubstate_i+7) = ISIhazard(i)
 %these substates span the variable ISI interval
 %if reward is received, then transition into the ITI
-for i=5:length(ISIhazard)+4
-    T(1+i,2+i)=1-ISIhazard(i-4);
-    T(1+i,15)=ISIhazard(i-4);
+% for i=5:length(ISIhazard)+4
+%     T(1+i,2+i)=1-ISIhazard(i-4);
+%     T(1+i,15)=ISIhazard(i-4);
+% end
+for i = 1:14
+    T(i, i+1) = 1;
 end
 T(14,15)=1;
 

@@ -146,6 +146,8 @@ imagesc(O)
 title('Observation Matrix')
 xlabel('Next Substate')
 ylabel('Current Substate')
+
+saveas(gcf, './observation_and_transition_matrix', 'png');
 %% Run TD learning
 
 results = TD(x,O,T);
@@ -157,6 +159,7 @@ RewardIndices=RewardIndices(length(RewardIndices)*0.4:end); % only look at trial
 ISIdistributionMatrix_rewardedtrials=ISIdistributionMatrix(~isnan(ISIdistributionMatrix));
 ISIsforplot=ISIdistributionMatrix_rewardedtrials(length(ISIdistributionMatrix_rewardedtrials)*0.4:end); % only look at trials after 2000 trials
 
+figure;
 plot(ISIsforplot,results.rpe(RewardIndices),'k*')
 xlabel('ISI')
 ylabel('TD error')
